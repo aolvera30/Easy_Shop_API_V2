@@ -1,6 +1,8 @@
 package org.yearup.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.yearup.data.CategoryDao;
 import org.yearup.data.ProductDao;
@@ -75,12 +77,16 @@ public class CategoriesController
     // add annotation to ensure that only an ADMIN can call this function
 
     @PutMapping("/{id}")
-    public void updateCategory(@PathVariable int id, @RequestBody Category category)
+    public ResponseEntity<Category> updateCategory(@PathVariable int id, @RequestBody Category category)
     {
         Category existingCategory = categoryDao.getById(id);
         if (existingCategory != null) {
-            category.setCategoryId(id); // set the id of the category to ensure the correct one is updated
+            category.setCategoryId(id);
             categoryDao.update(id, category);
+            return ResponseEntity.ok(category);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+
         }
     }
 
