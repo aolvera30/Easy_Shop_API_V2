@@ -43,7 +43,7 @@ public class CategoriesController
     }
 
     // add the appropriate annotation for a get action
-   @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public Category getById(@PathVariable int id)
     {
         // get the category by id
@@ -57,16 +57,14 @@ public class CategoriesController
     public List<Product> getProductsById(@PathVariable int categoryId)
     {
         // get a list of product by categoryId
-        return productDao. listByCategoryId(categoryId);
+        return productDao.listByCategoryId(categoryId);
     }
-
-
 
 
     // add annotation to call this method for a POST action
     // add annotation to ensure that only an ADMIN can call this function
 
-   @PostMapping
+    @PostMapping
     public Category addCategory(@RequestBody Category category)
     {
         // insert the category
@@ -88,14 +86,22 @@ public class CategoriesController
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 
         }
+
     }
 
 
     // add annotation to call this method for a DELETE action - the url path must include the categoryId
     // add annotation to ensure that only an ADMIN can call this function
     @DeleteMapping("/{id}")
-    public void deleteCategory(@PathVariable int id)
+    public ResponseEntity<Void> deleteCategory(@PathVariable int id)
     {
-        categoryDao.delete(id);
+        Category existingCategory = categoryDao.getById(id);
+        if (existingCategory != null) {
+            categoryDao.delete(id);
+            return ResponseEntity.noContent().build(); // 204 No Content
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // 404 Not Found
+        }
     }
+
 }
