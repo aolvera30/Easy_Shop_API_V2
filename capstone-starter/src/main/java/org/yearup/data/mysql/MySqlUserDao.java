@@ -36,14 +36,19 @@ public class MySqlUserDao extends MySqlDaoBase implements UserDao
 
             ps.executeUpdate();
 
+            System.out.println("User inserted into database: " + newUser.getUsername());//update
+
             User user = getByUserName(newUser.getUsername());
             user.setPassword("");
+
+            System.out.println("User retrieved from database with ID: " + user.getId());//update
 
             return user;
 
         }
         catch (SQLException e)
         {
+            e.printStackTrace();//update
             throw new RuntimeException(e);
         }
     }

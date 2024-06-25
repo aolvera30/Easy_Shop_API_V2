@@ -36,10 +36,13 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
 
             ps.executeUpdate();
 
+            System.out.println("Profile inserted into database for user ID: " + profile.getUserId());//update
             return profile;
+
         }
         catch (SQLException e)
         {
+            e.printStackTrace();//update
             throw new RuntimeException(e);
         }
     }

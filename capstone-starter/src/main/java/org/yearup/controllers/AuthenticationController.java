@@ -72,24 +72,33 @@ public class AuthenticationController {
 
         try
         {
+            System.out.println("Register request received for username: " + newUser.getUsername());//update
             boolean exists = userDao.exists(newUser.getUsername());
             if (exists)
             {
+                System.out.println("User already exists: " + newUser.getUsername());//update
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User Already Exists.");
             }
 
             // create user
             User user = userDao.create(new User(0, newUser.getUsername(), newUser.getPassword(), newUser.getRole()));
+            System.out.println("User created with ID: " + user.getId());//update
 
             // create profile
             Profile profile = new Profile();
             profile.setUserId(user.getId());
             profileDao.create(profile);
+            System.out.println("Profile created for user ID: " + user.getId());//update
 
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         }
-        catch (Exception e)
+        catch (ResponseStatusException e)               // (Exception e)
         {
+            System.out.println("ResponseStatusException: " + e.getMessage());
+            throw e;// update
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Exception: " + e.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
         }
     }

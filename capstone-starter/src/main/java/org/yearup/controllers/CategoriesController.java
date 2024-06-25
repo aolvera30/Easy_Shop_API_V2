@@ -3,9 +3,12 @@ package org.yearup.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.yearup.data.CategoryDao;
 import org.yearup.data.ProductDao;
+import org.yearup.data.mysql.MySqlCategoryDao;
 import org.yearup.models.Category;
 import org.yearup.models.Product;
 
@@ -44,10 +47,18 @@ public class CategoriesController
 
     // add the appropriate annotation for a get action
     @GetMapping("/{id}")
-    public Category getById(@PathVariable int id)
-    {
+    public Category getById(@PathVariable int id) {
         // get the category by id
-        return categoryDao.getById(id);
+
+        Category category = categoryDao.getById(id);
+        if (category == null) {
+
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+        }
+
+
+        return category;
     }
 
 
@@ -64,12 +75,17 @@ public class CategoriesController
     // add annotation to call this method for a POST action
     // add annotation to ensure that only an ADMIN can call this function
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public Category addCategory(@RequestBody Category category)
-    {
+    public Category addCategory(@RequestBody Category category) {
+
         // insert the category
-        return categoryDao.create(category);
+
+        var newCategory = categoryDao.create(category);
+        return newCategory;
+
     }
+
 
     // add annotation to call this method for a PUT (update) action - the url path must include the categoryId
     // add annotation to ensure that only an ADMIN can call this function
@@ -93,6 +109,7 @@ public class CategoriesController
     // add annotation to call this method for a DELETE action - the url path must include the categoryId
     // add annotation to ensure that only an ADMIN can call this function
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteCategory(@PathVariable int id)
     {
         Category existingCategory = categoryDao.getById(id);
