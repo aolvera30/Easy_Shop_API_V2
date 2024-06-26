@@ -76,7 +76,8 @@ public class CategoriesController
     // add annotation to ensure that only an ADMIN can call this function
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("")
     public Category addCategory(@RequestBody Category category) {
 
         // insert the category
@@ -90,6 +91,8 @@ public class CategoriesController
     // add annotation to call this method for a PUT (update) action - the url path must include the categoryId
     // add annotation to ensure that only an ADMIN can call this function
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable int id, @RequestBody Category category)
     {
@@ -110,6 +113,7 @@ public class CategoriesController
     // add annotation to ensure that only an ADMIN can call this function
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> deleteCategory(@PathVariable int id)
     {
         Category existingCategory = categoryDao.getById(id);
