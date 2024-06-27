@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="00fcb263-9cdd-417b-97bf-ac963c14ae8a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../capstone-starter/src/main/java/org/yearup/controllers/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../capstone-starter/src/main/java/org/yearup/controllers/AuthenticationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../capstone-starter/src/main/java/org/yearup/controllers/CategoriesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../capstone-starter/src/main/java/org/yearup/controllers/CategoriesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../capstone-starter/src/main/java/org/yearup/data/mysql/MySqlProfileDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../capstone-starter/src/main/java/org/yearup/data/mysql/MySqlProfileDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../capstone-starter/src/main/java/org/yearup/data/mysql/MySqlUserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../capstone-starter/src/main/java/org/yearup/data/mysql/MySqlUserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
